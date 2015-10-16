@@ -1,36 +1,41 @@
 ## Git Command
 
 ## commit
-  * ÇöÀç ³» ·ÎÄÃ ÀúÀå¼Ò¿¡ µ¥ÀÌÅÍ¸¦ Stage Area¿¡ ¿Ã¸°´Ù.
-  * -m ¸í·ÉÀ¸·Î ÄÚ¸àÆ® °¡´É
+  * í˜„ìž¬ ë‚´ ë¡œì»¬ ì €ìž¥ì†Œì— ë°ì´í„°ë¥¼ Stage Areaì— ì˜¬ë¦°ë‹¤.
+  * -m ëª…ë ¹ìœ¼ë¡œ ì½”ë©˜íŠ¸ ê°€ëŠ¥
 '''
-  git commit file.txt -m "modify file change" // ÄÚ¸àÆ® Ä¿¹Ô
+  git commit file.txt -m "modify file change" // ì½”ë©˜íŠ¸ ì»¤ë°‹
 '''
 
 ## add
-  * ÇöÀç Ãß°¡ µÇÁö ¾ÊÀº ÆÄÀÏµéÀ» ½ºÅ×ÀÌÁö¿¡ Ãß°¡ÇÑ´Ù.
+  * í˜„ìž¬ ì¶”ê°€ ë˜ì§€ ì•Šì€ íŒŒì¼ë“¤ì„ ìŠ¤í…Œì´ì§€ì— ì¶”ê°€í•œë‹¤.
 '''
-  git add file.txt  	// file.txt Ãß°¡
-  git add .		// ÇöÀç Æú´õ¿¡¼­ Ãß°¡µÇÁö ¾ÊÀº ÆÄÀÏ ¸ðµÎ Ãß°¡.
+  git add file.txt  	// file.txt ì¶”ê°€
+  git add .		// í˜„ìž¬ í´ë”ì—ì„œ ì¶”ê°€ë˜ì§€ ì•Šì€ íŒŒì¼ ëª¨ë‘ ì¶”ê°€.
 '''
 
-### Staging Area »ý·«ÇÏ±â
-    * Staging Area´Â Ä¿¹ÔÇÒ ÆÄÀÏÀ» Á¤¸®ÇÑ´Ù´Â Á¡¿¡¼­ ¸Å¿ì À¯¿ëÇÏÁö¸¸ º¹ÀâÇÏ±â¸¸ ÇÏ°í ÇÊ¿äÇÏÁö ¾ÊÀº ¶§µµ ÀÖ´Ù. ¾ÆÁÖ ½±°Ô Staging Area¸¦ »ý·«ÇÒ ¼ö ÀÖ´Ù. 
-    * git commit ¸í·ÉÀ» ½ÇÇàÇÒ ¶§ -a ¿É¼ÇÀ» Ãß°¡ÇÏ¸é GitÀº Tracked »óÅÂÀÇ ÆÄÀÏÀ» ÀÚµ¿À¸·Î Staging Area¿¡ ³Ö´Â´Ù. ±×·¡¼­ git add ¸í·ÉÀ» ½ÇÇàÇÏ´Â ¼ö°í¸¦ ´ú ¼ö ÀÖ´Ù:
+### Staging Area ìƒëžµí•˜ê¸°
+    * Staging AreaëŠ” ì»¤ë°‹í•  íŒŒì¼ì„ ì •ë¦¬í•œë‹¤ëŠ” ì ì—ì„œ ë§¤ìš° ìœ ìš©í•˜ì§€ë§Œ ë³µìž¡í•˜ê¸°ë§Œ í•˜ê³  í•„ìš”í•˜ì§€ ì•Šì€ ë•Œë„ ìžˆë‹¤. ì•„ì£¼ ì‰½ê²Œ Staging Areaë¥¼ ìƒëžµí•  ìˆ˜ ìžˆë‹¤. 
+    * git commit ëª…ë ¹ì„ ì‹¤í–‰í•  ë•Œ -a ì˜µì…˜ì„ ì¶”ê°€í•˜ë©´ Gitì€ Tracked ìƒíƒœì˜ íŒŒì¼ì„ ìžë™ìœ¼ë¡œ Staging Areaì— ë„£ëŠ”ë‹¤. ê·¸ëž˜ì„œ git add ëª…ë ¹ì„ ì‹¤í–‰í•˜ëŠ” ìˆ˜ê³ ë¥¼ ëœ ìˆ˜ ìžˆë‹¤:
 
 '''
-  git commit file.txt -a 				// Ãß°¡¿Í Ä¿¹Ô µ¿½Ã¿¡.
-  git commit file.txt -am "add and commit comment"	// Ãß°¡¿Í Ä¿¹Ô µ¿½Ã + ÄÚ¸àÆ®
+
+  git commit file.txt -a 				// ì¶”ê°€ì™€ ì»¤ë°‹ ë™ì‹œì—.
+  git commit file.txt -am "add and commit comment"	// ì¶”ê°€ì™€ ì»¤ë°‹ ë™ì‹œ + ì½”ë©˜íŠ¸
+  
 '''
 
 ## status
-  * ÇöÀç ½ºÅ×ÀÌÁöÀÇ »óÅÂ¸¦ Ç¥½ÃÇÑ´Ù.
+  * í˜„ìž¬ ìŠ¤í…Œì´ì§€ì˜ ìƒíƒœë¥¼ í‘œì‹œí•œë‹¤.
+
 '''
-// git add file.txt¸¦ ÀÌ¿ëÇÏ¿© ½ºÅ×ÀÌÁö ÆÄÀÏÀÌ Ãß°¡ µÈ °æ¿ì
+
+// git add file.txtë¥¼ ì´ìš©í•˜ì—¬ ìŠ¤í…Œì´ì§€ íŒŒì¼ì´ ì¶”ê°€ ëœ ê²½ìš°
 > git status
 On branch s up-to-date with 'origin/master'.
 
 Change to be committed:
  (use "git reset HEAD <file>..." to unstage)
 	new file: file.txt
+	
 '''
