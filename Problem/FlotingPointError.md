@@ -1,5 +1,5 @@
 ## 부동 소수점 오류
-### java script 오류로 인한 부동 소주점 오류
+### javascript를 사용하는 부분에서 long, ulong대신 text(string)으로 인자값을 보내자.
   * 발단
     * 클라이언트 접속, 데이터 상에서는 정상적으로 생성 및 찾기가 가능
 	* GM 툴에서 우편 생성 시, PostUID(ulong) 가 실제 값과 다르게 되는 오류  
