@@ -1,0 +1,8 @@
+## 삽질 공유
+  * 챕터 1 마지막 부분에서 코드로 정의 된 annotation을 xml파일로 변경 시 오류.
+  * 무한 오류 발생, 파일 경로가 존재해도 실제로 찾지를 못함, file not found exception
+  * 결과적으로 파일 경로는 정상으로 확인 실제 문제는 maven 내부에서 xml 을 읽어 들이는 부분에서
+  * java 파일 내부에 resources를 넣어주어야 읽어 들일 수 있음..
+  * 참조 http://stackoverflow.com/questions/5939959/ioexception-parsing-xml-document-from-class-path-resource
+  
+  * 자바의 import는 아무리 생각해도 묘하구먼.... 임포트에 따라 완전히 다른 성질로 클리스가 불려지니
