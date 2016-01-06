@@ -1,33 +1,33 @@
-# ¼º´É ±âÃÊ ÀÌ·Ð
-## ±âÃÊ ¿ë¾î
+# ì„±ëŠ¥ ê¸°ì´ˆ ì´ë¡ 
+## ê¸°ì´ˆ ìš©ì–´
 ### Transaction
-  * ¼º´É Å×½ºÆ®ÀÇ ÀÀ´ä½Ã°£ ÃøÁ¤ÀÇ ¾÷¹« ´ÜÀ§
+  * ì„±ëŠ¥ í…ŒìŠ¤íŠ¸ì˜ ì‘ë‹µì‹œê°„ ì¸¡ì •ì˜ ì—…ë¬´ ë‹¨ìœ„
   * Response Time
-    * »ç¿ëÀÚÀÇ ¿äÃ»(Request)À» Ã³¸®ÇÏ´Â ½Ã°£À» ÀÀ´ä½Ã°£ÀÌ¶ó°í ÇÏ¸ç, ¼­ºñ½º¸¦ Á¢¼ÓÇÑ »ç¿ëÀÚ°¡ Æ¯Á¤ ÄÁÅÙÃ÷¸¦ Á¦°ø ¹Þ±â À§ÇØ¼­ ¼­¹ö·Î ¿äÃ»À» º¸³»°í
-    * ¼­¹ö·ÎºÎÅÍ ÀÀ´äÀ» ¸ðµÎ ¹ÞÀ» ¶§±îÁöÀÇ ½Ã°£À» ÀÀ´ä ½Ã°£ÀÌ¶ó°í ÇÔ
+    * ì‚¬ìš©ìžì˜ ìš”ì²­(Request)ì„ ì²˜ë¦¬í•˜ëŠ” ì‹œê°„ì„ ì‘ë‹µì‹œê°„ì´ë¼ê³  í•˜ë©°, ì„œë¹„ìŠ¤ë¥¼ ì ‘ì†í•œ ì‚¬ìš©ìžê°€ íŠ¹ì • ì»¨í…ì¸ ë¥¼ ì œê³µ ë°›ê¸° ìœ„í•´ì„œ ì„œë²„ë¡œ ìš”ì²­ì„ ë³´ë‚´ê³ 
+    * ì„œë²„ë¡œë¶€í„° ì‘ë‹µì„ ëª¨ë‘ ë°›ì„ ë•Œê¹Œì§€ì˜ ì‹œê°„ì„ ì‘ë‹µ ì‹œê°„ì´ë¼ê³  í•¨
 '''
 Response time = Network Time + Server Time(Web + App + DB) + Client Time
 '''
 
 ### Think time
-  * »ç¿ëÀÚ ¿äÃ»°£ÀÇ ´ë±â½Ã°£
-  * »ç¿ëÀÚ°¡ ¼­¹ö·ÎºÎÅÍ ÄÁÅÙÃ÷¸¦ Á¦°ø ¹Þ°í ÇØ´ç ÄÁÅÙÃ÷¸¦ È®ÀÎ ÇÏ´Â ½Ã°£ÀÌ¸ç, ÀÌ ½Ã°£Àº ´ÙÀ½ ÄÁÅÙÃ÷¸¦ ¿äÃ»ÇÏ±â Àü±îÁöÀÇ ½Ã°£°ú °°À½
+  * ì‚¬ìš©ìž ìš”ì²­ê°„ì˜ ëŒ€ê¸°ì‹œê°„
+  * ì‚¬ìš©ìžê°€ ì„œë²„ë¡œë¶€í„° ì»¨í…ì¸ ë¥¼ ì œê³µ ë°›ê³  í•´ë‹¹ ì»¨í…ì¸ ë¥¼ í™•ì¸ í•˜ëŠ” ì‹œê°„ì´ë©°, ì´ ì‹œê°„ì€ ë‹¤ìŒ ì»¨í…ì¸ ë¥¼ ìš”ì²­í•˜ê¸° ì „ê¹Œì§€ì˜ ì‹œê°„ê³¼ ê°™ìŒ
     * Request Interval : Response Time + Think Time
 
 ### Concurrent User
-  * Concurrent User´Â µ¿½Ã »ç¿ëÀÚ·Î ÇØ´ç ½Ã½ºÅÛÀ» »ç¿ëÇÏ±â À§ÇØ PC ¾Õ¿¡ ¾É¾Æ ÀÖ´Â »ç¿ëÀÚ¸¦ ÀÇ¹ÌÇÔ
-  * Áï! ½Ã½ºÅÛ ¼¼¼ÇÀ» À¯ÁöÇÏ°í ÀÖ´Â »ç¿ëÀÚ¶ó°í ÀÌ¾ß±â ÇÒ ¼ö ÀÖÀ½
-      * Name User : ÇØ´ç ½Ã½ºÅÛ¿¡ Á¢¼Ò±ë °¡´ÉÇÑ »ç¿ëÀÚ.
+  * Concurrent UserëŠ” ë™ì‹œ ì‚¬ìš©ìžë¡œ í•´ë‹¹ ì‹œìŠ¤í…œì„ ì‚¬ìš©í•˜ê¸° ìœ„í•´ PC ì•žì— ì•‰ì•„ ìžˆëŠ” ì‚¬ìš©ìžë¥¼ ì˜ë¯¸í•¨
+  * ì¦‰! ì‹œìŠ¤í…œ ì„¸ì…˜ì„ ìœ ì§€í•˜ê³  ìžˆëŠ” ì‚¬ìš©ìžë¼ê³  ì´ì•¼ê¸° í•  ìˆ˜ ìžˆìŒ
+      * Name User : í•´ë‹¹ ì‹œìŠ¤í…œì— ì ‘ì†Œê¹… ê°€ëŠ¥í•œ ì‚¬ìš©ìž.
 
 ### Active user
-  * Request ¿äÃ»À» ÇÏ¿© ÀÀ´äÀ» ±â´Ù¸®°í ÀÖ´Â »ç¿ëÀÚ, Áï Å¬¶óÀÌ¾ðÆ® È¯°æ¿¡¼­ ¸í·ÉÀ» ½ÇÇàÇÏ°í ³ª¼­ °á°ú°¡ ¿Ã ¶§ ±îÁö ±â´Ù¸®°í ÀÖ´Â »ç¿ëÀÚ.
+  * Request ìš”ì²­ì„ í•˜ì—¬ ì‘ë‹µì„ ê¸°ë‹¤ë¦¬ê³  ìžˆëŠ” ì‚¬ìš©ìž, ì¦‰ í´ë¼ì´ì–¸íŠ¸ í™˜ê²½ì—ì„œ ëª…ë ¹ì„ ì‹¤í–‰í•˜ê³  ë‚˜ì„œ ê²°ê³¼ê°€ ì˜¬ ë•Œ ê¹Œì§€ ê¸°ë‹¤ë¦¬ê³  ìžˆëŠ” ì‚¬ìš©ìž.
   *  Concurrent User = Active User + Inactive User
 
 ### Peak Time
-  * ½Ã½ºÅÛ ¿äÃ»(Request)°¡ °¡Àå ¸¹Àº ½Ã°£À» ÀÇ¹Ì ÇÔ.
+  * ì‹œìŠ¤í…œ ìš”ì²­(Request)ê°€ ê°€ìž¥ ë§Žì€ ì‹œê°„ì„ ì˜ë¯¸ í•¨.
 
 ### TPS
-  * Transaction per Second ·Î »ç¿ëÀÚÀÇ ¿äÃ»(Request)¿¡ ´ëÇÑ ÃÊ´ç Ã³¸®µÈ °Ç¼ö¸¦ ÀÇ¹Ì ÇÔ( ½Ã½ºÅÛ¿¡¼­ ´ÜÀ§ ½Ã°£´ç Ã³¸®µÇ´Â Æ®·£Àè¼Ç °Ç¼ö)
+  * Transaction per Second ë¡œ ì‚¬ìš©ìžì˜ ìš”ì²­(Request)ì— ëŒ€í•œ ì´ˆë‹¹ ì²˜ë¦¬ëœ ê±´ìˆ˜ë¥¼ ì˜ë¯¸ í•¨( ì‹œìŠ¤í…œì—ì„œ ë‹¨ìœ„ ì‹œê°„ë‹¹ ì²˜ë¦¬ë˜ëŠ” íŠ¸ëžœìž­ì…˜ ê±´ìˆ˜)
     * TPM( Transaction Per Minute)
     * TPH( Transaction Per Hour)
     * 3600TPH = 60PTPM = 1 TPS
