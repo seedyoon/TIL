@@ -14,3 +14,9 @@
   * 폴더 및 파일의 사용 권한을 줄 때 사용
   * chown jenkins:jenkins {path:file}
 
+### 사용중인 포트 보기
+  * netstat -an | grep "LISTEN"
+  * netstat -anp | grep LISTEN | grep : 포트 번호
+  * ps -ef | grep "프로그램명"
+  
+  
