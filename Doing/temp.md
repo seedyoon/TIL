@@ -11,3 +11,10 @@
 
   7. 캐시 관련 부분은 일반적으로 빨라질 것으로 생각됨, 테스트 필요.
   8. 작은 부분만 수정 한 후 리얼 테스트 필요 - 더미
+  
+  
+  
+  
+  ### OWIN
+  * http://benfoster.io/blog/how-to-write-owin-middleware-in-5-different-steps
+
