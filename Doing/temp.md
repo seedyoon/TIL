@@ -18,3 +18,10 @@
   ### OWIN
   * http://benfoster.io/blog/how-to-write-owin-middleware-in-5-different-steps
 
+
+
+## 2016-07-06 기준
+
+  * 4.0.4 와 4.4.x
+  * threadpool 문제, Task를 사용(managed threadpool)하는 스레드가 매우 느리게 반환이 되는 문제 4.4.x에서 해결은 되었으나 윈도우에 비하면 여전히 느리다.
+  * tp를 사용하는 라이브러리에서 문제 발생 매우 심한 성능 저하. ( 85초 => 15초)

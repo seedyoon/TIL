@@ -1,0 +1,4 @@
+## windows 설치 시 문제
+  * 윈도우즈 서버에 설치 시, vagrant 이미지 카탈로그에 접근을 할 수 없음
+    * curl 다운로드 문제, 바이너리 코드를 다운로드 후(http://winampplugins.co.uk/curl/) 
+    *C:\HashiCorp\Vagrant\embedded\bin 폴더에 넣어준다.
