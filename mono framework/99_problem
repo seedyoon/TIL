@@ -1,0 +1,271 @@
+
+## http client 동작
+
+### windows
+  * restsharp
+    * async await 시
+      * 스레드 재사용성이 좋음, 테스크 스레드 저장소가 stack으로 동작, 저장소 부터 검사, 존재하면 최근에 사용한 스레드 사용 
+        ```
+            2016-07-28 16:08:34.8644 [11] [INFO] start REST
+            2016-07-28 16:08:34.8724 [11] [INFO] rest in
+            2016-07-28 16:08:35.0176 [16] [INFO] rest count 1
+            2016-07-28 16:08:35.0176 [16] [INFO] rest in
+            2016-07-28 16:08:35.0901 [16] [INFO] rest count 2
+            2016-07-28 16:08:35.0901 [16] [INFO] rest in
+            2016-07-28 16:08:35.1627 [16] [INFO] rest count 3
+            2016-07-28 16:08:35.1672 [16] [INFO] rest in
+            2016-07-28 16:08:35.2348 [16] [INFO] rest count 4
+            2016-07-28 16:08:35.2348 [16] [INFO] rest in
+            2016-07-28 16:08:35.3089 [16] [INFO] rest count 5
+            2016-07-28 16:08:35.3089 [16] [INFO] rest in
+            2016-07-28 16:08:35.3804 [17] [INFO] rest count 6
+            2016-07-28 16:08:35.3849 [17] [INFO] rest in
+            2016-07-28 16:08:35.4555 [17] [INFO] rest count 7
+            2016-07-28 16:08:35.4555 [17] [INFO] rest in
+            2016-07-28 16:08:35.5286 [17] [INFO] rest count 8
+            2016-07-28 16:08:35.5286 [17] [INFO] rest in
+            2016-07-28 16:08:35.6041 [17] [INFO] rest count 9
+            2016-07-28 16:08:35.6041 [17] [INFO] rest in
+            2016-07-28 16:08:35.6738 [17] [INFO] rest count 10
+            2016-07-28 16:08:35.6738 [17] [INFO] rest in
+            2016-07-28 16:08:35.7469 [16] [INFO] rest count 11
+            2016-07-28 16:08:35.7469 [16] [INFO] rest in
+            2016-07-28 16:08:35.8203 [16] [INFO] rest count 12
+            2016-07-28 16:08:35.8243 [16] [INFO] rest in
+            2016-07-28 16:08:35.8998 [16] [INFO] rest count 13
+            2016-07-28 16:08:35.9053 [16] [INFO] rest in
+            2016-07-28 16:08:35.9773 [17] [INFO] rest count 14
+            2016-07-28 16:08:35.9893 [17] [INFO] rest in
+            2016-07-28 16:08:36.0582 [17] [INFO] rest count 15
+            2016-07-28 16:08:36.0582 [17] [INFO] rest in
+            2016-07-28 16:08:36.1332 [17] [INFO] rest count 16
+            2016-07-28 16:08:36.1382 [17] [INFO] rest in
+            2016-07-28 16:08:36.2072 [17] [INFO] rest count 17
+            2016-07-28 16:08:36.2072 [17] [INFO] rest in
+            2016-07-28 16:08:36.2809 [17] [INFO] rest count 18
+            2016-07-28 16:08:36.2809 [17] [INFO] rest in
+            2016-07-28 16:08:36.3589 [16] [INFO] rest count 19
+            2016-07-28 16:08:36.3589 [16] [INFO] rest in
+            2016-07-28 16:08:36.4310 [16] [INFO] rest count 20
+            2016-07-28 16:08:36.4355 [16] [INFO] rest in
+            2016-07-28 16:08:36.5084 [16] [INFO] rest count 21
+            2016-07-28 16:08:36.5134 [16] [INFO] rest in
+            2016-07-28 16:08:36.5825 [16] [INFO] rest count 22
+        ```
+    * configure(false) 시
+      * 동시에 작업 테스크가 진행 시작, 진행중인 상태에서도 유휴 스레드를 이용하여 작업을 진행한다.
+        ```
+            2016-07-28 16:16:19.4440 [11] [INFO] start REST
+            2016-07-28 16:16:19.4515 [11] [INFO] rest in
+            2016-07-28 16:16:19.4775 [11] [INFO] rest in
+            2016-07-28 16:16:19.4845 [11] [INFO] rest in
+            2016-07-28 16:16:19.4845 [11] [INFO] rest in
+            2016-07-28 16:16:19.4965 [11] [INFO] rest in
+            2016-07-28 16:16:19.4965 [11] [INFO] rest in
+            2016-07-28 16:16:19.4965 [11] [INFO] rest in
+            2016-07-28 16:16:19.5145 [11] [INFO] rest in
+            2016-07-28 16:16:19.5145 [11] [INFO] rest in
+            2016-07-28 16:16:19.5305 [11] [INFO] rest in
+            2016-07-28 16:16:19.5305 [11] [INFO] rest in
+            2016-07-28 16:16:19.5445 [11] [INFO] rest in
+            2016-07-28 16:16:19.5445 [11] [INFO] rest in
+            2016-07-28 16:16:19.5445 [11] [INFO] rest in
+            2016-07-28 16:16:19.5625 [11] [INFO] rest in
+            2016-07-28 16:16:19.5625 [11] [INFO] rest in
+            2016-07-28 16:16:19.5745 [11] [INFO] rest in
+            2016-07-28 16:16:19.5745 [11] [INFO] rest in
+            2016-07-28 16:16:19.5885 [11] [INFO] rest in
+            2016-07-28 16:16:19.5885 [11] [INFO] rest in
+            2016-07-28 16:16:19.5885 [17] [INFO] rest count 2
+            2016-07-28 16:16:19.5885 [19] [INFO] rest count 1
+            2016-07-28 16:16:19.5885 [11] [INFO] rest in
+            2016-07-28 16:16:19.6110 [11] [INFO] rest in
+            2016-07-28 16:16:19.6110 [11] [INFO] rest in
+            2016-07-28 16:16:19.6230 [11] [INFO] rest in
+            2016-07-28 16:16:19.6230 [11] [INFO] rest in
+            2016-07-28 16:16:19.6360 [11] [INFO] rest in
+            2016-07-28 16:16:19.6360 [11] [INFO] rest in
+            2016-07-28 16:16:19.6510 [11] [INFO] rest in
+            2016-07-28 16:16:19.6510 [19] [INFO] rest count 3
+            2016-07-28 16:16:19.6510 [11] [INFO] rest in
+            2016-07-28 16:16:19.6510 [21] [INFO] rest count 4
+            2016-07-28 16:16:19.6700 [11] [INFO] rest in
+            2016-07-28 16:16:19.6700 [21] [INFO] rest count 5
+            2016-07-28 16:16:19.6700 [19] [INFO] rest count 6
+            2016-07-28 16:16:19.6700 [11] [INFO] rest in
+            2016-07-28 16:16:19.6865 [11] [INFO] rest in
+            2016-07-28 16:16:19.6865 [19] [INFO] rest count 7
+            2016-07-28 16:16:19.6865 [17] [INFO] rest count 8
+            2016-07-28 16:16:19.6865 [11] [INFO] rest in
+            2016-07-28 16:16:19.7010 [19] [INFO] rest count 9
+            2016-07-28 16:16:19.7010 [17] [INFO] rest count 10
+
+        ```
+      * httpclient
+        * async await 시
+          * 동작 후 반환 받은 테스크를 사용하는 형태(queue)로 동작을 진행, 사용하였던 스레드를 다시 사용하지는 않고 있는것으로 보인다.
+
+          ```
+            2016-07-28 16:08:27.1617 [11] [INFO] start HTTP
+            2016-07-28 16:08:27.2087 [11] [INFO] http in
+            2016-07-28 16:08:27.4462 [16] [INFO] http 1
+            2016-07-28 16:08:27.4497 [16] [INFO] http in
+            2016-07-28 16:08:27.6202 [17] [INFO] http 2
+            2016-07-28 16:08:27.6202 [17] [INFO] http in
+            2016-07-28 16:08:27.7612 [16] [INFO] http 3
+            2016-07-28 16:08:27.7612 [16] [INFO] http in
+            2016-07-28 16:08:27.8847 [17] [INFO] http 4
+            2016-07-28 16:08:27.8882 [17] [INFO] http in
+            2016-07-28 16:08:28.0102 [16] [INFO] http 5
+            2016-07-28 16:08:28.0102 [16] [INFO] http in
+            2016-07-28 16:08:28.1307 [17] [INFO] http 6
+            2016-07-28 16:08:28.1307 [17] [INFO] http in
+            2016-07-28 16:08:28.2502 [16] [INFO] http 7
+            2016-07-28 16:08:28.2502 [16] [INFO] http in
+            2016-07-28 16:08:28.3707 [17] [INFO] http 8
+            2016-07-28 16:08:28.3892 [17] [INFO] http in
+            2016-07-28 16:08:28.4989 [16] [INFO] http 9
+            2016-07-28 16:08:28.4989 [16] [INFO] http in
+            2016-07-28 16:08:28.6115 [17] [INFO] http 10
+            2016-07-28 16:08:28.6115 [17] [INFO] http in
+            2016-07-28 16:08:28.7378 [16] [INFO] http 11
+            2016-07-28 16:08:28.7378 [16] [INFO] http in
+            2016-07-28 16:08:28.8569 [17] [INFO] http 12
+            2016-07-28 16:08:28.8569 [17] [INFO] http in
+            2016-07-28 16:08:28.9685 [16] [INFO] http 13
+            2016-07-28 16:08:28.9685 [16] [INFO] http in
+            2016-07-28 16:08:29.0881 [17] [INFO] http 14
+            2016-07-28 16:08:29.0881 [17] [INFO] http in
+        ```
+        * configure(false) 시
+          * fire and execute , 작업 시작 스레드가 작업을 던지고, 각각의 fork 된 스레드들이 작업을 처리
+          * 예상 ) 스레드 풀에서 스레드를 가져오고, 없으면 생성해서 던짐
+          ```
+            2016-07-28 16:16:17.9104 [11] [INFO] start HTTP
+            2016-07-28 16:16:17.9749 [11] [INFO] http in
+            2016-07-28 16:16:18.0099 [11] [INFO] http in
+            2016-07-28 16:16:18.0099 [11] [INFO] http in
+            2016-07-28 16:16:18.0099 [11] [INFO] http in
+            2016-07-28 16:16:18.0099 [11] [INFO] http in
+            2016-07-28 16:16:18.0099 [11] [INFO] http in
+            2016-07-28 16:16:18.0279 [11] [INFO] http in
+            2016-07-28 16:16:18.1999 [19] [INFO] http 1
+            2016-07-28 16:16:18.1999 [18] [INFO] http 2
+            2016-07-28 16:16:18.1999 [17] [INFO] http 3
+            2016-07-28 16:16:18.1999 [16] [INFO] http 4
+            2016-07-28 16:16:18.1999 [19] [INFO] http 5
+            2016-07-28 16:16:18.1999 [16] [INFO] http 6
+            2016-07-28 16:16:18.2349 [17] [INFO] http 7
+            2016-07-28 16:16:18.2349 [18] [INFO] http 8
+          ```
+### mono
+  * restsharp
+    * async await 시
+      * httpclient와 별 차이 없어 보임, 로직적으로는 더 나은 성능을 보임
+      * 처리할 스레드가 존재하므로 동작에 문제가 없음, 재사용을 위해서 풀에 있는 스레드를 모두 가져와서 처리.
+
+    * configure(false) 시
+      * 한꺼번에 여러 작업을 하려 할 때, 하나의 테스크에 작업 처리를 몰아서 가져감
+      * 해당 작업이 완료 될 때까지 스레드를 더 할당하지도 동작하지도 않음(전체 점유를 해 버림)
+      * 작업이 성공, 혹은 실패 이후부터 하위 테스크들이 동작을 진행
+      * 작업이 n 개가 몰려오면 첫 사용시, 스레드 아사 상태가 됨, 성공 혹은 실패 진행이 진행 되기 전에는 작업 처리가 되지 않음.
+      ```
+        2016-07-28 07:43:13.5839 [5] [INFO] rest in
+        2016-07-28 07:43:13.5839 [5] [INFO] rest in
+        2016-07-28 07:43:13.5855 [5] [INFO] rest in
+        2016-07-28 07:43:13.5860 [5] [INFO] rest in
+        2016-07-28 07:43:13.5860 [5] [INFO] rest in
+        2016-07-28 07:43:13.5870 [5] [INFO] rest in
+        2016-07-28 07:43:13.5870 [5] [INFO] rest in
+        2016-07-28 07:43:13.5880 [5] [INFO] rest in
+        2016-07-28 07:43:13.5880 [5] [INFO] rest in
+        2016-07-28 07:43:13.5889 [5] [INFO] rest in
+        2016-07-28 07:43:25.3800 [30] [ERROR] Fail Get T : sessionid=1-eyJzIjogIjMzZDExMWUyYTI2MGZiNWFlMzExZTMxOTM0ZmQ5MDBmIiwgInQiOiAxfSAg&sdk_version=1.14.6&gameid=ma50&hostid=5500&ip=192.168.1.68, msg=The request timed-out., ex=System.Net.WebException: The request timed-out.
+        2016-07-28 07:43:25.3800 [30] [INFO] rest count 1
+        2016-07-28 07:43:25.3821 [30] [ERROR] Fail Get T : sessionid=1-eyJzIjogIjMzZDExMWUyYTI2MGZiNWFlMzExZTMxOTM0ZmQ5MDBmIiwgInQiOiAxfSAg&sdk_version=1.14.6&gameid=ma50&hostid=5500&ip=192.168.1.68, msg=Error getting response stream (InitRead): ReceiveFailure, ex=System.Net.WebException: Error getting response stream (InitRead): ReceiveFailure ---> System.NullReferenceException: Object reference not set to an instance of an object
+        at System.Net.WebConnection.InitRead (System.Object state) <0x420c14a0 + 0x0009f> in <filename unknown>:0
+        --- End of inner exception stack trace ---
+        at System.Net.HttpWebRequest.EndGetResponse (IAsyncResult asyncResult) <0x420ccd20 + 0x001ab> in <filename unknown>:0
+        at RestSharp.Http.GetRawResponseAsync (IAsyncResult result, System.Action`1 callback) <0x420ec7b0 + 0x0012a> in <filename unknown>:0
+        2016-07-28 07:43:25.3832 [30] [INFO] rest count 2
+        2016-07-28 07:43:25.3837 [30] [ERROR] Fail Get T : sessionid=1-eyJzIjogIjMzZDExMWUyYTI2MGZiNWFlMzExZTMxOTM0ZmQ5MDBmIiwgInQiOiAxfSAg&sdk_version=1.14.6&gameid=ma50&hostid=5500&ip=192.168.1.68, msg=The request timed-out., ex=System.Net.WebException: The request timed-out.
+        2016-07-28 07:43:25.3837 [30] [INFO] rest count 3
+        2016-07-28 07:43:25.3837 [30] [ERROR] Fail Get T : sessionid=1-eyJzIjogIjMzZDExMWUyYTI2MGZiNWFlMzExZTMxOTM0ZmQ5MDBmIiwgInQiOiAxfSAg&sdk_version=1.14.6&gameid=ma50&hostid=5500&ip=192.168.1.68, msg=Error getting response stream (InitRead): ReceiveFailure, ex=System.Net.WebException: Error getting response stream (InitRead): ReceiveFailure ---> System.NullReferenceException: Object reference not set to an instance of an object
+        at System.Net.WebConnection.InitRead (System.Object state) <0x420c14a0 + 0x0009f> in <filename unknown>:0
+        --- End of inner exception stack trace ---
+        at System.Net.HttpWebRequest.EndGetResponse (IAsyncResult asyncResult) <0x420ccd20 + 0x001ab> in <filename unknown>:0
+        at RestSharp.Http.GetRawResponseAsync (IAsyncResult result, System.Action`1 callback) <0x420ec7b0 + 0x0012a> in <filename unknown>:0
+        2016-07-28 07:43:25.3837 [30] [INFO] rest count 4
+        2016-07-28 07:43:25.3848 [30] [ERROR] Fail Get T : sessionid=1-eyJzIjogIjMzZDExMWUyYTI2MGZiNWFlMzExZTMxOTM0ZmQ5MDBmIiwgInQiOiAxfSAg&sdk_version=1.14.6&gameid=ma50&hostid=5500&ip=192.168.1.68, msg=The request timed-out., ex=System.Net.WebException: The request timed-out.
+        2016-07-28 07:43:25.3848 [30] [INFO] rest count 5
+        2016-07-28 07:43:25.3848 [30] [ERROR] Fail Get T : sessionid=1-eyJzIjogIjMzZDExMWUyYTI2MGZiNWFlMzExZTMxOTM0ZmQ5MDBmIiwgInQiOiAxfSAg&sdk_version=1.14.6&gameid=ma50&hostid=5500&ip=192.168.1.68, msg=The request timed-out., ex=System.Net.WebException: The request timed-out.
+        2016-07-28 07:43:25.3848 [30] [INFO] rest count 6
+        2016-07-28 07:43:25.4122 [12] [ERROR] Fail Get T : sessionid=1-eyJzIjogIjMzZDExMWUyYTI2MGZiNWFlMzExZTMxOTM0ZmQ5MDBmIiwgInQiOiAxfSAg&sdk_version=1.14.6&gameid=ma50&hostid=5500&ip=192.168.1.68, msg=The request timed-out., ex=System.Net.WebException: The request timed-out.
+        2016-07-28 07:43:25.4122 [12] [INFO] rest count 7
+        2016-07-28 07:43:25.5216 [12] [INFO] rest count 8
+        2016-07-28 07:43:25.5853 [29] [INFO] rest count 9
+        2016-07-28 07:43:25.6469 [12] [INFO] rest count 10
+      ```
+  
+  * httpclient
+    * async await 시
+      * 동작 후 반환 받은 테스크를 사용하는 형태(stack)로 동작을 진행
+      * 테스크 반환을 받지 않기 때문에 사용가능 혹은 새로 스레드를 생성해서 진행
+      * 병렬 처리가 되는 것을 볼 수 있음
+      * 테스크가 하나 이상의 작업을 진행하려 하지 않음(내부적으로 추가 작업이 없어 보임 )
+      ```
+        2016-07-28 06:55:43.7642 [8] [INFO] start HTTP
+        2016-07-28 06:55:43.7661 [8] [INFO] http in
+        2016-07-28 06:55:44.0190 [6] [INFO] http 1
+        2016-07-28 06:55:44.0195 [6] [INFO] http in
+        2016-07-28 06:55:44.2486 [6] [INFO] http 2
+        2016-07-28 06:55:44.2486 [6] [INFO] http in
+        2016-07-28 06:55:44.3980 [10] [INFO] http 3
+        2016-07-28 06:55:44.3980 [10] [INFO] http in
+        2016-07-28 06:55:44.5491 [10] [INFO] http 4
+        2016-07-28 06:55:44.5491 [10] [INFO] http in
+        2016-07-28 06:55:44.7201 [10] [INFO] http 5
+        2016-07-28 06:55:44.7201 [10] [INFO] http in
+        2016-07-28 06:55:44.8983 [9] [INFO] http 6
+        2016-07-28 06:55:44.8985 [9] [INFO] http in
+        2016-07-28 06:55:45.0958 [9] [INFO] http 7
+        2016-07-28 06:55:45.0958 [9] [INFO] http in
+        2016-07-28 06:55:45.3874 [9] [INFO] http 8
+        2016-07-28 06:55:45.3877 [9] [INFO] http in
+        2016-07-28 06:55:45.5799 [8] [INFO] http 9
+        2016-07-28 06:55:45.5799 [8] [INFO] http in
+        2016-07-28 06:55:45.7936 [8] [INFO] http 10
+        2016-07-28 06:55:45.7936 [8] [INFO] http in
+      ```
+    * configure(false) 시
+      * 하나의 테스크는 하나의 작업만을 전담해서 동작을 함
+      * 컨텍스트의 전환으로 느릴 수는 있으나 작업이 많이 몰려 왔다고 해서 스레드 아사 상태가 되지는 않음(선 처리로 스레드를 만드는 것으로 보임)
+      * 서버처럼 부하 몰림이 예측 되지 않을 때 유효해 보임
+      * 작업이 n개가  들어오면 풀에서 하나씩 순차적으로 처리, 작업 내부 스레드 처리에서 스레드 아사 상태가 되지는 않음
+      ```
+        2016-07-28 07:43:12.0178 [8] [INFO] start HTTP
+        2016-07-28 07:43:12.0195 [8] [INFO] http in
+        2016-07-28 07:43:12.0580 [8] [INFO] http in
+        2016-07-28 07:43:12.0580 [8] [INFO] http in
+        2016-07-28 07:43:12.0589 [8] [INFO] http in
+        2016-07-28 07:43:12.0589 [8] [INFO] http in
+        2016-07-28 07:43:12.0597 [8] [INFO] http in
+        2016-07-28 07:43:12.0597 [8] [INFO] http in
+        2016-07-28 07:43:12.0610 [8] [INFO] http in
+        2016-07-28 07:43:12.0610 [8] [INFO] http in
+        2016-07-28 07:43:12.0610 [8] [INFO] http in
+        2016-07-28 07:43:12.0620 [8] [INFO] http in
+        2016-07-28 07:43:12.5190 [6] [INFO] http 1
+        2016-07-28 07:43:12.5190 [9] [INFO] http 2
+        2016-07-28 07:43:12.5190 [10] [INFO] http 3
+        2016-07-28 07:43:12.5190 [6] [INFO] http 4
+        2016-07-28 07:43:12.5190 [5] [INFO] http 6
+        2016-07-28 07:43:12.5190 [8] [INFO] http 5
+        2016-07-28 07:43:12.5203 [9] [INFO] http 7
+        2016-07-28 07:43:12.5208 [5] [INFO] http 11
+        2016-07-28 07:43:12.5203 [6] [INFO] http 9
+        2016-07-28 07:43:12.5208 [8] [INFO] http 10
+        2016-07-28 07:43:12.5208 [5] [INFO] http 12
+        2016-07-28 07:43:12.5203 [10] [INFO] http 8
+
+      ```

@@ -1,50 +1,101 @@
-### nginx config
-  * reverse proxy config
-    ```
-    user  nginx;
-    worker_processes  4;
+user www-data;
+worker_processes 4;
+pid /run/nginx.pid;
 
-    error_log  /var/log/nginx/error.log debug;
-    pid        /var/run/nginx.pid;
+events {
+        worker_connections 1024;
+        # multi_accept on;
+}
 
+http {
 
-    events {
-        worker_connections  2048;
-    }
+        ##
+        # Basic Settings
+        ##
 
+        #sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        # server_tokens off;
 
-    http {
-        #include       /etc/nginx/mime.types;
-        #default_type  application/octet-stream;
+        # server_names_hash_bucket_size 64;
+        # server_name_in_redirect off;
 
-        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                          '$status $body_bytes_sent "$http_referer" '
-                          '"$http_user_agent" "$http_x_forwarded_for"';
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
 
-        access_log  /var/log/nginx/access.log  main;
+        ##
+        # SSL Settings
+        ##
 
-        #sendfile        on;
-        #tcp_nopush     on;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+        ssl_prefer_server_ciphers on;
 
-        #keepalive_timeout  65;
+        ##
+        # Logging Settings
+        ##
 
-        #gzip  on;
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+
+        ##
+        # Gzip Settings
+        ##
+
+        #gzip on;
+        #gzip_disable "msie6";
+
+        # gzip_vary on;
+        # gzip_proxied any;
+        # gzip_comp_level 6;
+        # gzip_buffers 16 8k;
+        # gzip_http_version 1.1;
+        # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+        ##
+        # Virtual Host Configs
+        ##
 
         #include /etc/nginx/conf.d/*.conf;
+        #include /etc/nginx/sites-enabled/*;
 
         upstream apps {
-            server 192.168.1.6:15500;
-            server 192.168.1.7:15500;
-            keepalive 500;
+                server 192.168.1.23:15501;
+                server 192.168.1.23:15502;
+                server 192.168.1.23:15503;
+                server 192.168.1.23:15504;
+                keepalive 500;
         }
+
 
         server {
-            listen 192.168.1.40:15500;
-
-            location / {
-                proxy_pass http://apps;
-            }
+                listen 192.168.1.23:15500;
+                location / {
+                        proxy_pass http://apps;
+                }
         }
-    }
+}
 
-```
+
+#mail {
+#       # See sample authentication script at:
+#       # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+#       # auth_http localhost/auth.php;
+#       # pop3_capabilities "TOP" "USER";
+#       # imap_capabilities "IMAP4rev1" "UIDPLUS";
+#
+#       server {
+#               listen     localhost:110;
+#               protocol   pop3;
+#               proxy      on;
+#       }
+#
+#       server {
+#               listen     localhost:143;
+#               protocol   imap;
+#               proxy      on;
+#       }
+#}

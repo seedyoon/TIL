@@ -1,0 +1,42 @@
+
+## Generic
+
+### JIT compiler - genric의 두가지 타입
+
+* open generic type
+ * 일반적인 generic type 예) list<t>
+ * 여러개의 type parameter를 가지는 generic 타입에서 모든 type parameter가 실제 수형으로 정의 된 것이 아니라면 open generic 이라고 한다.
+
+* closed generic type 
+ * type 파라메터가 아닌 일반 수형이 정의된 타입 예) list<user>
+ * type parameter가 실제 수형으로 확정된 것만 closed generic type이라 한다.
+
+* generic type은 IL 코드 상에서 type parameter로 정의된 형식 그대로를 가지고 있다. 
+ * 실제 generic type이 closed generic type으로 확정 되는 순간에 JIT compiler에 의해 컴파일 되고, 머신 코드를 생성하게 된다. 이때 JIT가 compiler 최적화를 통해 성능을 극대화 한다.
+ * 일반적으로 list<t>는 JIT에 의해 list<string>, list<user>등의 closed generic type을 생성한다.
+ * 이렇게 다른 type parameter에 대해 매번 컴파일을 통해 매번 새로운 class를 메모리에 적재한다는 것이 일반적이지만, 최적화를 통해 closed generic type은 하나의 수형으로 대체된다.
+ * 즉 JIT에 의해 한번만 컴파일 되고, 다른 type parameter에 의한 새로운 수형이라도 같은 형식을 사용하게끔 한다.
+ * 이로인해 boxing, unboxing이외에 성능상의 이점을 가질 수 있다.
+
+* 그 런 데
+ * type parameter의 실제 수형이 reference type이어야 JIT는 하나의 모선코드로 매핑을 시킴
+ * value type인 경우엔 수형에 따라 각각 머신 코드가 생성됨
+ * value parameter가 reference type인 경우 JIT에 의해 서로 다른 수형에 대해서는 같은 JIT 코드 공유
+ * value parameter가 value type인 경우 각각 JIT code가 독립적으로 생김
+
+ * value type의 closed generic type은 두단계의 컴파일  
+  * IL code로 기존 T를 int로 교체
+  * JIT compiler로 컴파일되어 코드 생성
+  * 즉 IL의 코드  T를 int로 교체 후 IL 코드를 JIT 컴파일러가 컴파일
+
+* 결론
+ * value type마다 계속해서 IL 코드를 복제, 컴파일을 수행하므로, reference type을 사용하는 것보다 효율이 떨어짐
+ * 다만 value type에 대해 기존처럼 boxing/unboxing하는 것보다는 성능이 좋으므로 generic추천
+
+
+
+
+
+
+
+ 

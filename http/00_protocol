@@ -1,0 +1,112 @@
+## CORS 크로스 도메인 이슈, 참고 사이트 http://ooz.co.kr/232
+
+
+
+### Access-Control-Allow-Origin header is present on the rqusted resource
+
+* nodejs로 구성된 운영툴 페이지에서 다른 서버에 request를 요청
+  * redicrect를 하는 것처럼 다른 서버 주소를 설정해서 전달.
+  * gm 페이지 내에서 javascript(jquery)를 이용하여 다른 서버의 도메인의 URL을 호출하여 데이터 가져오기 실행
+  * 크로스 도메인 문제 발생
+
+* 크로스 도메인 문제
+ * 자신의 웹 서비스에서만 사용하기 위해 다른 서브 도메인을 가진 API 함수를 제공하는 서버를 구축하였는데 다른 웹서비스에서 접근해서 마음대로 API 호출시 문제 발생
+ * javascript는 동일 출처 정책(same Origin policy) 라는 정책을 두어 다른 도메인의 서버에 요청하는 것을 보안 문제로 간주, 이를 차단
+ * 즉 자신이 속한 동일한 도메인 내에서만 서버 요청을 허용하고 처리해 주겠다는 것
+ * 샌드 박스 정책
+   * 보호된 영역 안에서만 프로그램을 동작 시킬 수 있도록 하여, 외부에 의해 영향을 받지 않도록 하는 모델
+ * 물리적으로 동일한 서버에도 여러 도메인 사용 가능, 즉 크로스 도메인은 물리적인 서버나 환경의 이슈가 아닌 도메인 이름 자체의 이슈
+
+* 해결 방법
+ * 일부 서버의 수정 없이 클라이언트 단에서 해결하는 방법이 존재(jsonp, document domain, 크롬 브라우저의 특수 업션 등)하나, 범용적인 웹 서비스에서 사용이 어렵고
+ * 100 % 클라이언트 단에서 해결은 불가능 하거나 기능이 제한됨
+ * 실제 서버에서 해결 해 주는 것이 표준화된 방법이고, 100% 해결 가능한 방법.
+
+* 에러 코드 예시
+```
+XMLHttpRequest cannot load http://www.ozit.co.kr 
+No 'Access-Control-Allow-Origin' header is present on the requested resource.
+Origin ' http://www.abc.ozit.co.kr' is therefore not allowed access.
+```
+
+ * http://www.abc.ozit.co.kr 도메인의 웹 서비스에서 ozit.co.kr 도메인으로 AJAX를 호출하였으나 접근 할 수 없다는 말
+ * access-Control-allow-Origin 헤더가 요청된 자원에 존재하지 않기 때문
+ * 필터를 구성해서 적용하거나 명시적으로 선언해 주면 됨 (난 헤더에 그냥 적용)
+
+* 허용 도메인 설정 방법 및 예시
+```
+- web.xml -
+<filter>
+    <filter-name>cors</filter-name>
+    <filter-class>com.company.project.util.domain.SimpleCORSFilter</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>cors</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+```
+
+```
+- SimpleCORSFilter.java -
+ 
+package com.company.project.util.domain;
+ 
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
+ 
+@Component
+public class SimpleCORSFilter implements Filter {
+ 
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) res;
+
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        
+        response.setHeader("Access-Control-Allow-Origin", "*");
+     
+
+        chain.doFilter(req, res);
+    }
+    public void init(FilterConfig filterConfig) {}
+    public void destroy() {}
+}
+```
+
+ * response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+   * POST, GET, OPTIONS, DELETE 요청에 대해 허용하겠다는 의미입니다.
+ 
+ * response.setHeader("Access-Control-Max-Age", "3600");
+   * HTTP Request 요청에 앞서 Preflight Request 라는 요청이 발생되는데, 이는 해당 서버에 요청하는 메서드가 실행 가능한지(권한이 있는지) 확인을 위한 요청입니다. Preflight Request는 OPTIONS 메서드를 통해 서버에 전달됩니다. (위의 Methods 설정에서 OPTIONS 를 허용해 주었습니다.)
+   * 여기서 Access-Control-Max-Age 는 Preflight request를 캐시할 시간입니다. 단위는 초단위이며, 3,600초는 1시간입니다. Preflight Request를 웹브라우저에 캐시한다면 최소 1시간동안에는 서버에 재 요청하지 않을 것입니다.
+ 
+ * response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+   * 이는 표준화된 규약은 아니지만, 보통 AJAX 호출이라는 것을 의미하기 위해 비공식적으로 사용되는 절차입니다. JQuery 또한 AJAX 요청 시, 이 헤더(x-requested-with)를 포함하는 것을 확인하실 수 있습니다. 여기서는 이 요청이 Ajax 요청임을 알려주기 위해 Header 에 x-request-width를 설정합니다. Form을 통한 요청과 Ajax 요청을 * 구분하기 위해 사용된 비표준 규약지만, 많은 라이브러리에서 이를 채택하여 사용하고 있습니다. (참고로 HTML5 부터는 Form 과 Ajax 요청을 구분할 수 있는 Header가 추가되었습니다.)
+ 
+ * response.setHeader("Access-Control-Allow-Origin", "*");
+   * 이 부분이 가장 중요한 부분입니다. * 는 모든 도메인에 대해 허용하겠다는 의미입니다. 즉 어떤 웹사이트라도 이 서버에 접근하여 AJAX 요청하여 결과를 가져갈 수 있도록 허용하겠다는 의미입니다.
+   * 만약 보안 이슈가 있어서 특정 도메인만 허용해야 한다면 * 대신 특정 도메인만을 지정할 수 있습니다.
+ 
+
+ ```
+ response.addHeader("Access-Control-Allow-Origin", "*");
+ 
+대신 
+ 
+response.addHeader("Access-Control-Allow-Origin", "http://www.ozit.co.kr");
+response.addHeader("Access-Control-Allow-Origin", "http://abc.ozit.co.kr");
+response.addHeader("Access-Control-Allow-Origin", "http://test.ozrank.co.kr");
+ 
+ 
+이렇게 쓰면
+www.ozit.co.kr, abc.ozit.co.kr, test.ozrank.co.kr 이렇게 3개의 도메인에 대해서만 크로스 도메인을 허용하겠다는 의미입니다.
+ 
+ ```
