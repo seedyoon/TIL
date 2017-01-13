@@ -1,5 +1,3 @@
-## vagrant up
-    ```
     cd /etc/apt
     sudo cp sources.list sources.list.bak
     # repository를 한국으로 바꿔줍니다.
@@ -8,15 +6,15 @@
     # vim을 설치합니다.
     sudo apt-get install -y vim
     # mysql
-    sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password password {password}'
-    sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password {password}'
+    sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password password cabbage#12!!'
+    sudo debconf-set-selections <<< 'mysql-server-5.5 mysql-server/root_password_again password cabbage#12!!'
     sudo apt-get update
     sudo apt-get install -y mysql-server-5.5
     sudo apt-get install -y mysql-client
     # mysql 계정을 생성하고 외부접속을 허용합니다.
-    mysql -uroot -p{password} << EOF
-    create user 'cabbage'@'%' identified by '{password}';
-    grant all privileges on *.* to 'cabbage'@'%' identified by '{password}';
+    mysql -uroot -pcabbage#12!! << EOF
+    create user 'cabbage'@'%' identified by 'cabbage#12!!';
+    grant all privileges on *.* to 'cabbage'@'%' identified by 'cabbage#12!!';
     flush privileges;
     select * from mysql.user;
     EOF
@@ -36,7 +34,7 @@
     cd ../utils
     echo -e '\n\n\n\n\n\n' | sudo ./install_server.sh
     cd /etc/redis
-    sudo sed -i 's/# requirepass foobared/requirepass {password}/g' 6379.conf
+    sudo sed -i 's/# requirepass foobared/requirepass cabbage#12!!/g' 6379.conf
     cd /etc/init.d
     sudo ./redis_6379 stop
     sudo ./redis_6379 start
@@ -48,8 +46,7 @@
     iptables-save
     iptables -L
     # root 계정 비밀번호를 설정합니다.
-    echo -e '{password}\n{password}\n' | sudo passwd
+    echo -e 'cabbage#12!!\ncabbage#12!!\n' | sudo passwd
     # cabbage 계정을 생성하고 sudo그룹에 추가합니다.
-    echo -e '{password}\n{password}\n\n\n\n\n\n\n' | adduser cabbage
+    echo -e 'cabbage#12!!\ncabbage#12!!\n\n\n\n\n\n\n' | adduser cabbage
     adduser cabbage sudo
-    ```
